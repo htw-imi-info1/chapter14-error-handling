@@ -9,7 +9,7 @@ import java.util.TreeSet;
 /**
  * A class to maintain an arbitrary number of contact details.
  * Details are indexed by both name and phone number.
- * 
+ *
  * @author David J. Barnes and Michael Kölling.
  * @version 2011.07.31
  */
@@ -27,7 +27,7 @@ public class AddressBook
         book = new TreeMap<String, ContactDetails>();
         numberOfEntries = 0;
     }
-    
+
     /**
      * Look up a name or phone number and return the
      * corresponding contact details.
@@ -59,7 +59,7 @@ public class AddressBook
         book.put(details.getPhone(), details);
         numberOfEntries++;
     }
-    
+
     /**
      * Change the details previously stored under the given key.
      * @param oldKey One of the keys used to store the details.
@@ -71,7 +71,7 @@ public class AddressBook
         removeDetails(oldKey);
         addDetails(details);
     }
-    
+
     /**
      * Search for all details stored under a key that starts with
      * the given prefix.
@@ -118,7 +118,7 @@ public class AddressBook
     public void removeDetails(String key)
     {
         ContactDetails details = book.get(key);
-        book.remove(details.getName());
+          book.remove(details.getName());
         book.remove(details.getPhone());
         numberOfEntries--;
     }
