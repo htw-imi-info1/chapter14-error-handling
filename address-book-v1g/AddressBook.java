@@ -3,6 +3,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -118,7 +119,7 @@ public class AddressBook
     public void removeDetails(String key)
     {
         ContactDetails details = book.get(key);
-          book.remove(details.getName());
+        book.remove(details.getName());
         book.remove(details.getPhone());
         numberOfEntries--;
     }

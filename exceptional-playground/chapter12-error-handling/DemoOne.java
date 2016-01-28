@@ -24,6 +24,24 @@ public class DemoOne
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
+
+    public void methodThrowingException() throws MyException{
+        throw new MyException("I throw an exception!");
+    }
+
+    public void clientMethod() throws MyException{
+        methodThrowingException();
+    }
+
+    public void userInterface(){
+        try{
+            clientMethod();
+        }
+        catch(MyException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public int methodOneCatching(String y)
     {
         try{
@@ -63,5 +81,9 @@ public class DemoOne
         catch(MyException e){
             System.out.println("caught Exception: "+e.getMessage());
         }
+    }
+    
+    public void unchecked(){
+        throw new MyUncheckedException("!");
     }
 }
