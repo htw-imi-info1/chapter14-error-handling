@@ -3,9 +3,9 @@ TechSupport - the DodgySoft Technical support system.
 This project is part of the material for the book
 
    Objects First with Java - A Practical Introduction using BlueJ
-   Fifth edition
+   Sixth edition
    David J. Barnes and Michael Kölling
-   Pearson Education, 2012
+   Pearson Education, 2016
 
 This project is discussed in chapters 5 and 12.
 
