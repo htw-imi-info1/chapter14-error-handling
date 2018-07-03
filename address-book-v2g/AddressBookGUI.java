@@ -16,7 +16,7 @@ import java.util.*;
  *      One to show all the entries in the book.
  *
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class AddressBookGUI extends JFrame
 {
@@ -117,25 +117,21 @@ public class AddressBookGUI extends JFrame
         JButton clear = new JButton("Clear");
 
         // Take the necessary action to add the new details.
-        add.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev)
-            {
+        add.addActionListener(e -> {
                 book.addDetails(
                     new ContactDetails(nameField.getText(),
                                        phoneField.getText(),
                                        address.getText()));
             }
-        });
+        );
 
         // Clear the data-entry areas.
-        clear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev)
-            {
+        clear.addActionListener(e -> {
                 nameField.setText("");
                 phoneField.setText("");
                 address.setText("");
             }
-        });
+        );
         buttonArea.add(add);
         buttonArea.add(clear);
 
@@ -200,9 +196,7 @@ public class AddressBookGUI extends JFrame
                 if(searchString.length() > 0) {
                     ContactDetails[] results = book.search(searchString);
                     for(int i = 0; i < results.length; i++) {
-                        buffer.append(results[i].toString());
-                        buffer.append('\n');
-                        buffer.append('\n');
+                        buffer.append(results[i].toString()).append("\n\n");
                     }
                 }
                 resultList.setText(buffer.toString());
@@ -237,20 +231,10 @@ public class AddressBookGUI extends JFrame
         JButton clear = new JButton("Clear");
         
         // List all of the entries.
-        list.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ev)
-            {
-                details.setText(book.listDetails());
-            }
-        });
+        list.addActionListener(e -> details.setText(book.listDetails()));
 
         // Clear the details area.
-        clear.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ev)
-            {
-                details.setText("");
-            }
-        });
+        clear.addActionListener(e -> details.setText(""));
         buttonArea.add(list);
         buttonArea.add(clear);
 

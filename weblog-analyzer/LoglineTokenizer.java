@@ -6,8 +6,8 @@ import java.util.Scanner;
  * Currently, the log file is assumed to contain simply
  * integer date and time information.
  * 
- * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @author David J. Barnes and Michael Kolling.
+ * @version 2016.02.29
  */
 public class LoglineTokenizer
 {

@@ -3,16 +3,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
  * A class to maintain an arbitrary number of contact details.
  * Details are indexed by both name and phone number.
- *
+ * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class AddressBook
 {
@@ -25,10 +24,10 @@ public class AddressBook
      */
     public AddressBook()
     {
-        book = new TreeMap<String, ContactDetails>();
+        book = new TreeMap<>();
         numberOfEntries = 0;
     }
-
+    
     /**
      * Look up a name or phone number and return the
      * corresponding contact details.
@@ -60,7 +59,7 @@ public class AddressBook
         book.put(details.getPhone(), details);
         numberOfEntries++;
     }
-
+    
     /**
      * Change the details previously stored under the given key.
      * @param oldKey One of the keys used to store the details.
@@ -72,7 +71,7 @@ public class AddressBook
         removeDetails(oldKey);
         addDetails(details);
     }
-
+    
     /**
      * Search for all details stored under a key that starts with
      * the given prefix.
@@ -82,7 +81,7 @@ public class AddressBook
     public ContactDetails[] search(String keyPrefix)
     {
         // Build a list of the matches.
-        List<ContactDetails> matches = new LinkedList<ContactDetails>();
+        List<ContactDetails> matches = new LinkedList<>();
         // Find keys that are equal-to or greater-than the prefix.
         SortedMap<String, ContactDetails> tail = book.tailMap(keyPrefix);
         Iterator<String> it = tail.keySet().iterator();
@@ -135,11 +134,9 @@ public class AddressBook
         // necessary to build a set of the ContactDetails. This
         // eliminates duplicates.
         StringBuilder allEntries = new StringBuilder();
-        Set<ContactDetails> sortedDetails = new TreeSet<ContactDetails>(book.values());
+        Set<ContactDetails> sortedDetails = new TreeSet<>(book.values());
         for(ContactDetails details : sortedDetails) {
-            allEntries.append(details);
-            allEntries.append('\n');
-            allEntries.append('\n');
+            allEntries.append(details).append("\n\n");
         }
         return allEntries.toString();
     }

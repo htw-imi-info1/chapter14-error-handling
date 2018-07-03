@@ -7,7 +7,7 @@ import java.util.Calendar;
  * accessors such as getHour() and getMinute().
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class LogEntry implements Comparable<LogEntry>
 {

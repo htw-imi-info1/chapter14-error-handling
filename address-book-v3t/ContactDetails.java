@@ -2,7 +2,7 @@
  * Name, address and telephone number details.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class ContactDetails implements Comparable<ContactDetails>
 {
@@ -35,7 +35,7 @@ public class ContactDetails implements Comparable<ContactDetails>
         this.phone = phone.trim();
         this.address = address.trim();
 
-        if(this.name.length() == 0 && this.phone.length() == 0) {
+        if(this.name.isEmpty() && this.phone.isEmpty()) {
             throw new IllegalStateException(
                       "Either the name or phone must not be blank.");
         }

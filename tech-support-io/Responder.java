@@ -1,9 +1,7 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import java.nio.charset.Charset;
+import java.nio.file.*;
+import java.util.*;
 
 /**
  * The responder class represents a response generator object.
@@ -17,7 +15,7 @@ import java.util.Random;
  * words is recognized, one of the default responses is randomly chosen.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class Responder
 {
@@ -34,8 +32,8 @@ public class Responder
      */
     public Responder()
     {
-        responseMap = new HashMap<String, String>();
-        defaultResponses = new ArrayList<String>();
+        responseMap = new HashMap<>();
+        defaultResponses = new ArrayList<>();
         fillResponseMap();
         fillDefaultResponses();
         randomGenerator = new Random();
@@ -123,15 +121,14 @@ public class Responder
      */
     private void fillDefaultResponses()
     {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(FILE_OF_DEFAULT_RESPONSES));
+        Charset charset = Charset.forName("US-ASCII");
+        Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
+        try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String response = reader.readLine();
             while(response != null) {
                 defaultResponses.add(response);
                 response = reader.readLine();
             }
-            reader.close();
         }
         catch(FileNotFoundException e) {
             System.err.println("Unable to open " + FILE_OF_DEFAULT_RESPONSES);

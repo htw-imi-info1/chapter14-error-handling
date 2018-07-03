@@ -11,7 +11,7 @@ import java.util.TreeSet;
  * Details are indexed by both name and phone number.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class AddressBook
 {
@@ -24,7 +24,7 @@ public class AddressBook
      */
     public AddressBook()
     {
-        book = new TreeMap<String, ContactDetails>();
+        book = new TreeMap<>();
         numberOfEntries = 0;
     }
     
@@ -81,7 +81,7 @@ public class AddressBook
     public ContactDetails[] search(String keyPrefix)
     {
         // Build a list of the matches.
-        List<ContactDetails> matches = new LinkedList<ContactDetails>();
+        List<ContactDetails> matches = new LinkedList<>();
         // Find keys that are equal-to or greater-than the prefix.
         SortedMap<String, ContactDetails> tail = book.tailMap(keyPrefix);
         Iterator<String> it = tail.keySet().iterator();
@@ -135,11 +135,9 @@ public class AddressBook
         // necessary to build a set of the ContactDetails. This
         // eliminates duplicates.
         StringBuilder allEntries = new StringBuilder();
-        Set<ContactDetails> sortedDetails = new TreeSet<ContactDetails>(book.values());
+        Set<ContactDetails> sortedDetails = new TreeSet<>(book.values());
         for(ContactDetails details : sortedDetails) {
-            allEntries.append(details);
-            allEntries.append('\n');
-            allEntries.append('\n');
+            allEntries.append(details).append("\n\n");
         }
         return allEntries.toString();
     }

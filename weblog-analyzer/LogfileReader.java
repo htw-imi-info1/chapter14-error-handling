@@ -1,9 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -15,7 +17,7 @@ import java.util.Scanner;
  * Log entries are sorted into ascending order of date.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class LogfileReader implements Iterator<LogEntry>
 {
@@ -30,7 +32,7 @@ public class LogfileReader implements Iterator<LogEntry>
     /**
      * Create a LogfileReader to supply data from a default file.
      */
-    public LogfileReader() throws IOException
+    public LogfileReader()
     {
         this("weblog.txt");
     }
@@ -40,18 +42,22 @@ public class LogfileReader implements Iterator<LogEntry>
      * from a particular log file. 
      * @param filename The file of log data.
      */
-    public LogfileReader(String filename) throws IOException
+    public LogfileReader(String filename)
     {
         // The format for the data.
         format = "Year Month(1-12) Day Hour Minute";       
         // Where to store the data.
-        entries = new ArrayList<LogEntry>();
+        entries = new ArrayList<>();
         
         // Attempt to read the complete set of data from file.
         boolean dataRead;
         try{
-            File f = new File(filename);
-            Scanner logfile = new Scanner(f);
+            // Locate the file with respect to the current environment.
+            URL fileURL = getClass().getClassLoader().getResource(filename);
+            if(fileURL == null) {
+                throw new FileNotFoundException(filename);
+            }
+            Scanner logfile = new Scanner(new File(fileURL.toURI()));
             // Read the data lines until the end of file.
             while(logfile.hasNextLine()) {
                 String logline = logfile.nextLine();
@@ -63,9 +69,19 @@ public class LogfileReader implements Iterator<LogEntry>
             dataRead = true;
         }
         catch(FileNotFoundException e) {
-            System.out.println("Unable to find the file: " + filename);
-            // Propagate the exception to the caller.
-            throw e;
+            System.out.println("Problem encountered: " + e);
+            dataRead = false;
+        }
+        catch(URISyntaxException e) {
+            System.out.println("Problem encountered: " + e);
+            dataRead = false;
+        }
+        // If we couldn't read the log file, use simulated data.
+        if(!dataRead) {
+            System.out.println("Failed to read the data file: " +
+                               filename);
+            System.out.println("Using simulated data instead.");
+            createSimulatedData(entries);
         }
         // Sort the entries into ascending order.
         Collections.sort(entries);
@@ -129,6 +145,22 @@ public class LogfileReader implements Iterator<LogEntry>
     {
         for(LogEntry entry : entries) {
             System.out.println(entry);
+        }
+    }
+
+    /**
+     * Provide a sample of simulated data.
+     * NB: To simplify the creation of this data, no
+     * days after the 28th of a month are ever generated.
+     * @param data Where to store the simulated LogEntry objects.
+     */
+    private void createSimulatedData(ArrayList<LogEntry> data)
+    {
+        LogfileCreator creator = new LogfileCreator();
+       // How many simulated entries we want.
+        int numEntries = 100;
+        for(int i = 0; i < numEntries; i++) {
+            data.add(creator.createEntry());
         }
     }
 }

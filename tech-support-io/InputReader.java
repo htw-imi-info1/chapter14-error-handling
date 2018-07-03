@@ -7,7 +7,7 @@ import java.util.Scanner;
  * is provided.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class InputReader
 {
@@ -36,7 +36,7 @@ public class InputReader
         String[] wordArray = inputLine.split(" ");  // split at spaces
 
         // add words from array into hashset 
-        HashSet<String> words = new HashSet<String>();
+        HashSet<String> words = new HashSet<>();
         for(String word : wordArray) {
             words.add(word);
         }

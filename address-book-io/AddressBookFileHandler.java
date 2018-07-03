@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.*;
 
 /**
  * Provide a range of file-handling operations on an AddressBook.
@@ -8,7 +9,7 @@ import java.net.URL;
  * java.io package.
  * 
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class AddressBookFileHandler
 {
@@ -33,9 +34,9 @@ public class AddressBookFileHandler
      */
     public void saveSearchResults(String keyPrefix) throws IOException
     {
-        File resultsFile = makeAbsoluteFilename(RESULTS_FILE);
+        Path resultsFile = Paths.get(RESULTS_FILE).toAbsolutePath();
         ContactDetails[] results = book.search(keyPrefix);
-        FileWriter writer = new FileWriter(resultsFile);
+        FileWriter writer = new FileWriter(resultsFile.toString());
         for(ContactDetails details : results) {
             writer.write(details.toString());
             writer.write('\n');
@@ -53,8 +54,8 @@ public class AddressBookFileHandler
     {
         BufferedReader reader = null;
         try {
-            File resultsFile = makeAbsoluteFilename(RESULTS_FILE);
-            reader = new BufferedReader(new FileReader(resultsFile));
+            Path resultsFile = Paths.get(RESULTS_FILE).toAbsolutePath();
+            reader = new BufferedReader(new FileReader(resultsFile.toString()));
             System.out.println("Results ...");
             String line;
             line = reader.readLine();
@@ -159,47 +160,10 @@ public class AddressBookFileHandler
      */
     public void saveToFile(String destinationFile) throws IOException
     {
-        File destination = makeAbsoluteFilename(destinationFile);
+        Path destination = Paths.get(destinationFile).toAbsolutePath();
         ObjectOutputStream os = new ObjectOutputStream(
-                                    new FileOutputStream(destination));
+                                    new FileOutputStream(destination.toString()));
         os.writeObject(book);
         os.close();
-    }
-    
-    /**
-     * Create an absolute file from the given file name.
-     * If the filename is an absolute one already, then use it
-     * unchanged, otherwise assume it is relative to the
-     * current project folder.
-     * @throws IOException If a valid filename cannot be made.
-     */
-    private File makeAbsoluteFilename(String filename) throws IOException
-    {
-        try {
-            File file = new File(filename);
-            if(!file.isAbsolute()) {
-                file = new File(getProjectFolder(), filename);
-            }
-            return file;
-        }
-        catch(URISyntaxException e) {
-            throw new IOException("Unable to make a valid filename for " +
-                                  filename);
-        }
-    }
-    
-    /**
-     * Try to determine the name of the current project folder.
-     * This process involves locating the path of the .class file
-     * for this class, and then extracting the name of the folder
-     * containing it.
-     * @throws URISyntaxException If the URL is not formatted correctly.
-     * @return The current project folder.
-     */
-    private File getProjectFolder() throws URISyntaxException
-    {
-         String myClassFile = getClass().getName() + ".class";
-         URL url = getClass().getResource(myClassFile);
-         return new File(url.toURI()).getParentFile();
     }
 }

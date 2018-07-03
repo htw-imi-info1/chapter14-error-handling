@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Input is filtered via getCommand for valid commands.
  *
  * @author David J. Barnes and Michael Kölling.
- * @version 2011.07.31
+ * @version 2016.02.29
  */
 public class Parser 
 {
