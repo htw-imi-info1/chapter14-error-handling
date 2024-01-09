@@ -6,4 +6,6 @@ comment2.params=
 comment2.target=void\ run()
 comment3.params=a\ b
 comment3.target=int\ division(int,\ int)
-numComments=4
+comment4.params=a\ b
+comment4.target=int\ division3(int,\ int)
+numComments=5
